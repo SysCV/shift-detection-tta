@@ -1,3 +1,26 @@
+Metadata-Version: 2.1
+Name: shift-tta
+Version: 0.0.0
+Summary: Test-time adaptation platform for object detection from the VIS group at ETH Zurich
+Home-page: https://github.com/SysCV/shift-detection-tta
+Author: Mattia Segu
+Author-email: mattia.segu@vision.ee.ethz.ch
+License: MIT License
+Keywords: computer vision,object detection,test-time adaptation
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Description-Content-Type: text/markdown
+Provides-Extra: all
+Provides-Extra: build
+Provides-Extra: mim
+License-File: LICENSE
+
 <div align="center">
   <img src="resources/shift-logo.png" width="600"/>
   <div>&nbsp;</div>

@@ -1,7 +1,7 @@
 import datetime
 import warnings
 
-from mmdet.utils import register_all_modules as register_all_mmdet_modules
+from mmtrack.utils import register_all_modules as register_all_mmtrack_modules
 from mmengine import DefaultScope
 
 
@@ -24,7 +24,7 @@ def register_all_modules(init_default_scope: bool = True) -> None:
     import shift_tta.models  # noqa: F401,F403
     import shift_tta.visualization  # noqa: F401,F403
 
-    register_all_mmdet_modules(init_default_scope=False)
+    register_all_mmtrack_modules(init_default_scope=False)
 
     if init_default_scope:
         never_created = DefaultScope.get_current_instance() is None \
