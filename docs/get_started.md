@@ -129,7 +129,7 @@ you can install it before installing MMCV.
 
 ### A from-scratch setup script
 
-Assuming that you already have CUDA 10.1 installed, here is a full script for setting up MMTracking with conda.
+Assuming that you already have CUDA 10.1 installed, here is a full script for setting up shift-detection-tta with conda.
 
 ```shell
 conda create -n shift-tta python=3.9 -y

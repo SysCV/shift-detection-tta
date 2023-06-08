@@ -1,16 +1,17 @@
 _base_ = [
     '../../_base_/models/yolox_x_8x8.py',
-    '../../_base_/datasets/mot_challenge.py', '../../_base_/default_runtime.py'
+    '../../_base_/datasets/shift.py',
+    '../../_base_/default_runtime.py'
 ]
 
-dataset_type = 'MOTChallengeDataset'
-data_root = 'data/MOT17/'
+dataset_type = 'SHIFTDataset'
+data_root = 'data/shift/'
 
 img_scale = (800, 1440)
 batch_size = 4
 
 model = dict(
-    type='MeanTeacherYOLOX',
+    type='AdaptiveYOLOX',
     data_preprocessor=dict(
         type='TrackDataPreprocessor',
         pad_size_divisor=32,
@@ -30,9 +31,8 @@ model = dict(
             checkpoint=  # noqa: E251
             'https://download.openmmlab.com/mmdetection/v2.0/yolox/yolox_x_8x8_300e_coco/yolox_x_8x8_300e_coco_20211126_140254-1ef88d67.pth'  # noqa: E501
         )),
-    motion=dict(type='KalmanFilter'),
-    tracker=dict(
-        type='ByteTracker',
+    adapter=dict(
+        type='MeanTeacherYOLOXAdapter',
         obj_score_thrs=dict(high=0.6, low=0.1),
         init_track_thr=0.7,
         weight_iou_with_det_scores=True,
@@ -92,42 +92,16 @@ train_dataloader = dict(
     dataset=dict(
         type='mmdet.MultiImageMixDataset',
         dataset=dict(
-            type='mmdet.ConcatDataset',
-            datasets=[
-                dict(
-                    type='mmdet.CocoDataset',
-                    data_root='data/MOT17',
-                    ann_file='annotations/half-train_cocoformat.json',
-                    # TODO: mmdet use img as key, but img_path is needed
-                    data_prefix=dict(img='train'),
-                    filter_cfg=dict(filter_empty_gt=True, min_size=32),
-                    metainfo=dict(CLASSES=('pedestrian')),
-                    pipeline=[
-                        dict(type='LoadImageFromFile'),
-                        dict(type='LoadTrackAnnotations'),
-                    ]),
-                dict(
-                    type='mmdet.CocoDataset',
-                    data_root='data/crowdhuman',
-                    ann_file='annotations/crowdhuman_train.json',
-                    data_prefix=dict(img='train'),
-                    filter_cfg=dict(filter_empty_gt=True, min_size=32),
-                    metainfo=dict(CLASSES=('pedestrian')),
-                    pipeline=[
-                        dict(type='LoadImageFromFile'),
-                        dict(type='LoadTrackAnnotations'),
-                    ]),
-                dict(
-                    type='mmdet.CocoDataset',
-                    data_root='data/crowdhuman',
-                    ann_file='annotations/crowdhuman_val.json',
-                    data_prefix=dict(img='val'),
-                    filter_cfg=dict(filter_empty_gt=True, min_size=32),
-                    metainfo=dict(CLASSES=('pedestrian')),
-                    pipeline=[
-                        dict(type='LoadImageFromFile'),
-                        dict(type='LoadTrackAnnotations'),
-                    ]),
+            type='mmdet.CocoDataset',
+            data_root='data/shift',
+            ann_file='annotations/half-train_cocoformat.json',
+            # TODO: mmdet use img as key, but img_path is needed
+            data_prefix=dict(img='train'),
+            filter_cfg=dict(filter_empty_gt=True, min_size=32),
+            metainfo=dict(CLASSES=('pedestrian', 'car', 'truck', 'bus', 'motorcycle', 'bicycle')),
+            pipeline=[
+                dict(type='LoadImageFromFile'),
+                dict(type='LoadTrackAnnotations'),
             ]),
         pipeline=train_pipeline))
 val_dataloader = dict(
@@ -157,8 +131,8 @@ optim_wrapper = dict(
 
 # some hyper parameters
 # training settings
-total_epochs = 80
-num_last_epochs = 10
+total_epochs = 12
+num_last_epochs = 2
 resume_from = None
 interval = 5
 
@@ -210,8 +184,10 @@ custom_hooks = [
         priority=49)
 ]
 default_hooks = dict(checkpoint=dict(interval=1))
+
 # evaluator
-val_evaluator = dict(postprocess_tracklet_cfg=[
-    dict(type='InterpolateTracklets', min_num_frames=5, max_num_frames=20)
-])
+val_evaluator = [
+    dict(type='CocoVideoMetric', metric=['bbox'], classwise=True),
+]
+
 test_evaluator = val_evaluator
