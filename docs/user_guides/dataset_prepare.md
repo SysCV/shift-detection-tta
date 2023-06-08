@@ -173,3 +173,10 @@ shift-detection-tta
 │   │   │   │   │   │   │   ├── det_2d.json (the official annotation files)
 │   │   │   │   │   │   │   ├── det_2d_cocoformat.json (the converted annotation file)
 ```
+
+### 2.3 Dataset Loading
+Some high-performance clusters do not support folders with a large number of files. For this reason, we implemented a [ZipBackend](shift_tta/fileio/backends/zip_backend.py) and a [TarBackend](shift_tta/fileio/backends/tar_backend.py) for loading data directly from `.zip` and `.tar` files.
+
+For usage, refer to the [`shift.py`](configs/_base_/datasets/shift.py) config file.
+
+# TODO: we might have to split the dataset file into two, depending on how we want to handle testing on the discrete val set and adapting to the continuous val set.

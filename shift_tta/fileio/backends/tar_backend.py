@@ -1,12 +1,21 @@
 from pathlib import Path
 from typing import Union
+from tarfile import TarFile
+
+import os
 
 from mmengine.fileio.backends.base import BaseStorageBackend
 
 
 class TarBackend(BaseStorageBackend):
+    """Backend for loading data from .tar files.
 
-    def __init__(self, tar_path="", **kwargs):
+    This backend works with filepaths pointing to valid .tar files. We assume
+    that the given .tar file contains the whole dataset associated to this
+    backend.
+    """
+
+    def __init__(self, tar_path='', **kwargs):
         self.tar_path = str(tar_path)
         self._client = None
 
@@ -28,17 +37,29 @@ class TarBackend(BaseStorageBackend):
             self._client = self._get_client()
 
         filepath = str(filepath)
-        data = self.client.extractfile(filepath)
-        data = data.read()
+        try:
+            with self._client.extractfile(filepath) as data:
+                data = data.read()
+        except KeyError as e:
+            raise ValueError(
+                f"Value '{filepath}' not found in {self._client}!") from e
         return data
 
     def get_text(self, filepath, encoding=None):
         raise NotImplementedError
 
-    def _get_client(self):
-        import tarfile
-        
-        return tarfile.TarFile(self.tar_path)
+    def _get_client(self) -> TarFile:
+        """Get Tar client.
+
+        Returns:
+            TarFile: the tar file.
+        """
+
+        if not os.path.exists(self.tar_path):
+            raise FileNotFoundError(
+                f"Corresponding tar file not found:" f" {self.tar_path}")
+
+        return TarFile(self.tar_path)
 
     def __del__(self):
         if self._client is not None:
