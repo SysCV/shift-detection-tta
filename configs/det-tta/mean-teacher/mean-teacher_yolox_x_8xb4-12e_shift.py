@@ -40,6 +40,13 @@ model = dict(
         num_frames_retain=30))
 
 train_pipeline = [
+    dict(type='LoadImageFromFile', 
+         backend_args=dict(
+             backend='ZipBackend',
+             tar_path=data_root + 'discrete/images/train/front/img_decompressed.tar',
+         )
+    ),
+    dict(type='LoadTrackAnnotations'),
     dict(
         type='mmdet.Mosaic',
         img_scale=img_scale,
@@ -74,7 +81,12 @@ train_pipeline = [
     dict(type='PackTrackInputs', pack_single_img=True)
 ]
 test_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile',
+         backend_args=dict(
+             backend='TarBackend',
+             tar_path=data_root + 'continuous/videos/val/front/img_decompressed.tar',
+         )
+    ),
     dict(type='mmdet.Resize', scale=img_scale, keep_ratio=True),
     dict(
         type='mmdet.Pad',
@@ -93,17 +105,17 @@ train_dataloader = dict(
         type='mmdet.MultiImageMixDataset',
         dataset=dict(
             type='mmdet.CocoDataset',
-            data_root='data/shift',
+            data_root=data_root,
+            ann_file=data_root + 'discrete/images/train/front/det_2d_cocoformat.json',
             ann_file='annotations/half-train_cocoformat.json',
             # TODO: mmdet use img as key, but img_path is needed
-            data_prefix=dict(img='train'),
+            data_prefix=dict(img=''),
             filter_cfg=dict(filter_empty_gt=True, min_size=32),
             metainfo=dict(CLASSES=('pedestrian', 'car', 'truck', 'bus', 'motorcycle', 'bicycle')),
-            pipeline=[
-                dict(type='LoadImageFromFile'),
-                dict(type='LoadTrackAnnotations'),
-            ]),
-        pipeline=train_pipeline))
+            pipeline=train_pipeline))
+)
+# TODO: this is the dataloader for validating the detector with adapter. 
+# make dataloader for discrete val set for source domain evaluation without adapter
 val_dataloader = dict(
     batch_size=1,
     num_workers=2,
@@ -113,8 +125,8 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='annotations/half-val_cocoformat.json',
-        data_prefix=dict(img_path='train'),
+        ann_file=data_root + 'continuous/videos/val/front/det_2d_cocoformat.json',
+        data_prefix=dict(img_path=''),
         ref_img_sampler=None,
         load_as_video=True,
         test_mode=True,

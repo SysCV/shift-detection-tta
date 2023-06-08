@@ -47,9 +47,23 @@ shift-detection-tta
 │   ├── shift
 │   │   ├── discrete
 │   │   │   ├── images
+│   │   │   │   ├── train
+│   │   │   │   │   ├── front
+│   │   │   │   │   │   ├── img.zip
+│   │   │   │   │   │   ├── det_2d.json (the official annotation files)
+│   │   │   │   ├── val
+│   │   │   │   │   │   ├── img.zip
+│   │   │   │   │   │   ├── det_2d.json (the official annotation files)
 │   │   ├── continuous
-│   │   │   ├── DET
-│   │   ├── annotations
+│   │   │   ├── videos
+│   │   │   │   ├── 1x
+│   │   │   │   │   ├── val
+│   │   │   │   │   │   ├── front
+│   │   │   │   │   │   │   ├── img.tar
+│   │   │   │   │   │   │   ├── det_2d.json (the official annotation files)
+│   │   │   │   │   ├── test
+│   │   │   │   │   │   │   ├── img.tar
+│   │   │   │   │   │   │   ├── det_2d.json (the official annotation files)
 ```
 
 
@@ -71,23 +85,56 @@ docker run -v <path/to/data>:/data -e MODE=hdf5 shift_dataset_decompress
 Here, <path/to/data> denotes the root path under which all tar files will be processed recursively. The mode and number of jobs can be configured through environment variables MODE and JOBS.
 ```
 
+The folder structure will be as following after your run these scripts:
+
+```
+shift-detection-tta
+├── shift_tta
+├── tools
+├── configs
+├── data
+│   ├── shift
+│   │   ├── discrete
+│   │   │   ├── images
+│   │   │   │   ├── train
+│   │   │   │   │   ├── front
+│   │   │   │   │   │   ├── img.zip
+│   │   │   │   │   │   ├── det_2d.json (the official annotation files)
+│   │   │   │   ├── val
+│   │   │   │   │   ├── front
+│   │   │   │   │   │   ├── img.zip
+│   │   │   │   │   │   ├── det_2d.json (the official annotation files)
+│   │   ├── continuous
+│   │   │   ├── videos
+│   │   │   │   ├── 1x
+│   │   │   │   │   ├── val
+│   │   │   │   │   │   ├── front
+│   │   │   │   │   │   │   ├── img.tar
+│   │   │   │   │   │   │   ├── img_decompressed.tar
+│   │   │   │   │   │   │   ├── det_2d.json (the official annotation files)
+│   │   │   │   │   ├── test
+│   │   │   │   │   │   ├── front
+│   │   │   │   │   │   │   ├── img.tar
+│   │   │   │   │   │   │   ├── img_decompressed.tar
+│   │   │   │   │   │   │   ├── det_2d.json (the official annotation files)
+```
 
 ### 2.2 Convert Annotations
 
 We use [CocoVID](https://github.com/open-mmlab/mmtracking/blob/master/mmtrack/datasets/parsers/coco_video_parser.py) to maintain all datasets in this codebase.
+
 In this case, you need to convert the official annotations to this style. We provide scripts and the usages are as following:
 
 ```shell
 # SHIFT discrete (images, detection-like)
-mkdir -p $DATADIR/shift/discrete/images/$SET_NAME/front/
-python -m scalabel.label.to_coco -m det -i $DATADIR/shift/labels/det_20/det_$SET_NAME.json -o $DATADIR/shift/annotations/det_20/box_det_$SET_NAME_cocofmt.json
+python -m scalabel.label.to_coco -m det -i $DATADIR/shift/discrete/images/$SET_NAME/front/det_2d.json -o $DATADIR/shift/discrete/images/$SET_NAME/front/det_2d_cocoformat.json
 
 # SHIFT continuous (videos, tracking-like)
-mkdir -p $DATADIR/shift/continuous/videos/$SET_NAME/front/
-python -m scalabel.label.to_coco -m box_track -i $DATADIR/shift/labels/box_track_20/$SET_NAME -o $DATADIR/shift/annotations/box_track_20/box_track_$SET_NAME_cocofmt.json
+python -m scalabel.label.to_coco -m box_track -i $DATADIR/shift/continuous/videos/1x/$SET_NAME/front/det_2d.json -o $DATADIR/shift/continuous/videos/1x/$SET_NAME/front/det_2d_cocoformat.json
 ```
 
 where `$SET_NAME` is one of `[train, val, test]`.
+
 
 The folder structure will be as following after your run these scripts:
 
@@ -100,33 +147,29 @@ shift-detection-tta
 │   ├── shift
 │   │   ├── discrete
 │   │   │   ├── images
+│   │   │   │   ├── train
+│   │   │   │   │   ├── front
+│   │   │   │   │   │   ├── img.zip
+│   │   │   │   │   │   ├── det_2d.json (the official annotation files)
+│   │   │   │   │   │   ├── det_2d_cocoformat.json (the converted annotation file)
+│   │   │   │   ├── val
+│   │   │   │   │   ├── front
+│   │   │   │   │   │   ├── img.zip
+│   │   │   │   │   │   ├── det_2d.json (the official annotation files)
+│   │   │   │   │   │   ├── det_2d_cocoformat.json (the converted annotation file)
 │   │   ├── continuous
-│   │   │   ├── DET
-│   │   ├── annotations
-│   │
-│   ├── youtube_vis_2021
-│   │   │── train
-│   │   │   │── JPEGImages
-│   │   │   │── instances.json (the official annotation files)
-│   │   │   │── ......
-│   │   │── valid
-│   │   │   │── JPEGImages
-│   │   │   │── instances.json (the official annotation files)
-│   │   │   │── ......
-│   │   │── test
-│   │   │   │── JPEGImages
-│   │   │   │── instances.json (the official annotation files)
-│   │   │   │── ......
-│   │   │── annotations (the converted annotation file)
+│   │   │   ├── videos
+│   │   │   │   ├── 1x
+│   │   │   │   │   ├── val
+│   │   │   │   │   │   ├── front
+│   │   │   │   │   │   │   ├── img.tar
+│   │   │   │   │   │   │   ├── img_decompressed.tar
+│   │   │   │   │   │   │   ├── det_2d.json (the official annotation files)
+│   │   │   │   │   │   │   ├── det_2d_cocoformat.json (the converted annotation file)
+│   │   │   │   │   ├── test
+│   │   │   │   │   │   ├── front
+│   │   │   │   │   │   │   ├── img.tar
+│   │   │   │   │   │   │   ├── img_decompressed.tar
+│   │   │   │   │   │   │   ├── det_2d.json (the official annotation files)
+│   │   │   │   │   │   │   ├── det_2d_cocoformat.json (the converted annotation file)
 ```
-
-
-#### The folder of annotations in youtube_vis_2019/youtube_vis2021
-
-There are 3 JSON files in `data/youtube_vis_2019/annotations` or `data/youtube_vis_2021/annotations`:
-
-`youtube_vis_2019_train.json`/`youtube_vis_2021_train.json`: JSON file containing the annotations information of the training set in youtube_vis_2019/youtube_vis2021 dataset.
-
-`youtube_vis_2019_valid.json`/`youtube_vis_2021_valid.json`: JSON file containing the annotations information of the validation set in youtube_vis_2019/youtube_vis2021 dataset.
-
-`youtube_vis_2019_test.json`/`youtube_vis_2021_test.json`: JSON file containing the annotations information of the testing set in youtube_vis_2019/youtube_vis2021 dataset.
