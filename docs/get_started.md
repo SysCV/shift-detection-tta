@@ -129,7 +129,7 @@ you can install it before installing MMCV.
 
 ### A from-scratch setup script
 
-Assuming that you already have CUDA 10.1 installed, here is a full script for setting up shift-detection-tta with conda. It can also be executed from `./tools/install/setup_env.sh`
+Assuming that you already have CUDA 10.1 installed, here is a full script for setting up shift-detection-tta with conda.
 
 ```shell
 conda create -n shift-tta python=3.9 -y
@@ -154,3 +154,13 @@ cd shift-detection-tta
 pip install -r requirements/build.txt
 pip install -v -e .
 ```
+
+
+Alternatively, clone the repository and directly run the install script [setup_env.sh](tools/install/setup_env.sh):
+
+```shell
+git clone git@github.com:SysCV/shift-detection-tta.git
+cd shift-detection-tta
+./tools/install/setup_env.sh
+```
+

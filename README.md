@@ -29,7 +29,7 @@ The master branch works with **PyTorch1.6+**.
 
 Please refer to [get_started.md](docs/get_started.md) for install instructions.
 
-Please refer to [inference.md](docs/user_guides/inference.md) for the basic usage of our repository. If you want to train and test your own model, please see [dataset_prepare.md](docs/user_guides/dataset_prepare.md) and [train_test.md](docs/user_guides/train_test.md).
+Please refer to [inference.md](docs/inference.md) for the basic usage of our repository. If you want to train and test your own model, please see [dataset_prepare.md](docs/dataset_prepare.md) and [train_test.md](docs/train_test.md).
 
 ### Prepare the SHIFT dataset
 
