@@ -132,7 +132,7 @@ val_dataset=dict(
     pipeline=test_pipeline,
     metainfo=dict(classes=('pedestrian', 'car', 'truck', 'bus', 'motorcycle', 'bicycle')))
 val_dataloader = dict(
-    batch_size=batch_size,
+    batch_size=1,
     num_workers=4,
     persistent_workers=True,
     drop_last=False,

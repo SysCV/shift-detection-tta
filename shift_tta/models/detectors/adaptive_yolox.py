@@ -99,17 +99,15 @@ class AdaptiveYOLOX(BaseAdaptiveDetector):
         data_sample.pred_det_instances = \
             det_results[0].pred_instances.clone()
 
-        if self.adapter is not None:
-            pred_track_instances = self.adapter.adapt(
+        if self.with_adapter:
+            adapted_det_instances = self.adapter.adapt(
                 model=self,
                 img=img,
                 feats=None,
                 data_sample=data_sample,
                 **kwargs)
+            data_sample.pred_det_instances = adapted_det_instances
         else:
             pass
-            # TODO: build pred_track_instances as detections only
-        # our framework builds on mmtrack since it implements video processing
-        data_sample.pred_track_instances = pred_track_instances
 
         return [data_sample]
