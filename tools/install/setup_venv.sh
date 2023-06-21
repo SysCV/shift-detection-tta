@@ -12,6 +12,7 @@ python -m pip install git+ssh://git@github.com/open-mmlab/mmclassification.git@d
 python -m pip install git+ssh://git@github.com/open-mmlab/mmtracking.git@dev-1.x
 python -m pip install --no-input -r requirements.txt
 python -m pip install git+https://github.com/JonathonLuiten/TrackEval.git
+python -m pip install git+https://github.com/scalabel/scalabel.git
 
 # install shift-detection-tta
 pip install --no-input -v -e .
