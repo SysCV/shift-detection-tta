@@ -171,7 +171,7 @@ param_scheduler = [
         end=1,
         convert_to_iter_based=True),
     dict(
-        # use cosine lr from 1 to 70 epoch
+        # use cosine lr from 1 to epoch #(total_epochs - num_last_epochs) 
         type='mmdet.CosineAnnealingLR',
         eta_min=lr * 0.05,
         begin=1,

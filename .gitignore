@@ -117,6 +117,8 @@ ckpts
 work_dirs/
 shift_tta/.mim
 shift_tta.egg_info
+errors/
+outputs/
 
 # Pytorch
 *.pth
