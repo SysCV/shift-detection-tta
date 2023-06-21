@@ -9,7 +9,7 @@ from mmtrack.utils import (ForwardResults, OptConfigType, OptMultiConfig,
                            OptSampleList, SampleList)
 
 
-class BaseDetectorAdapter(BaseModel, metaclass=ABCMeta):
+class BaseAdaptiveDetector(BaseModel, metaclass=ABCMeta):
     """Base class for test-time adaptation of object detection.
 
     Args:

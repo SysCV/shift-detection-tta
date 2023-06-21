@@ -7,11 +7,11 @@ from torch import Tensor
 from mmtrack.utils import OptConfigType, OptMultiConfig, SampleList
 
 from shift_tta.registry import MODELS, TASK_UTILS
-from .base import BaseDetectorAdapter
+from .base import BaseAdaptiveDetector
 
 
 @MODELS.register_module()
-class AdaptiveYOLOX(BaseDetectorAdapter):
+class AdaptiveYOLOX(BaseAdaptiveDetector):
     """AdaptiveYOLOX: baseline test-time adaptation method for object detection.
 
     Args:
@@ -99,12 +99,16 @@ class AdaptiveYOLOX(BaseDetectorAdapter):
         data_sample.pred_det_instances = \
             det_results[0].pred_instances.clone()
 
-        pred_track_instances = self.adapter.adapt(
-            model=self,
-            img=img,
-            feats=None,
-            data_sample=data_sample,
-            **kwargs)
+        if self.adapter is not None:
+            pred_track_instances = self.adapter.adapt(
+                model=self,
+                img=img,
+                feats=None,
+                data_sample=data_sample,
+                **kwargs)
+        else:
+            pass
+            # TODO: build pred_track_instances as detections only
         # our framework builds on mmtrack since it implements video processing
         data_sample.pred_track_instances = pred_track_instances
 

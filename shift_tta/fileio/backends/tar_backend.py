@@ -4,9 +4,10 @@ from tarfile import TarFile
 
 import os
 
-from mmengine.fileio.backends.base import BaseStorageBackend
+from mmengine.fileio.backends import BaseStorageBackend, register_backend
 
 
+@register_backend('tar')
 class TarBackend(BaseStorageBackend):
     """Backend for loading data from .tar files.
 

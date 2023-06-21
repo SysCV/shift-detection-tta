@@ -3,7 +3,7 @@ img_scale = (640, 640)
 
 model = dict(
     data_preprocessor=dict(
-        type='TrackDataPreprocessor',
+        type='mmtrack.TrackDataPreprocessor',
         pad_size_divisor=32,
         batch_augments=[
             dict(

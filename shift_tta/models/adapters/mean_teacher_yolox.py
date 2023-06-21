@@ -7,7 +7,7 @@ import torch
 from mmdet.structures.bbox import bbox_overlaps
 from mmengine.structures import InstanceData
 
-from mmtrack.registry import MODELS
+from shift_tta.registry import MODELS
 from mmtrack.structures import TrackDataSample
 from mmtrack.structures.bbox import bbox_cxcyah_to_xyxy, bbox_xyxy_to_cxcyah
 from .base_adapter import BaseAdapter

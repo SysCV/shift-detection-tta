@@ -1,4 +1,4 @@
-from backends import TarBackend, ZipBackend
+from .backends import TarBackend, ZipBackend
 
 
 __all__ = [

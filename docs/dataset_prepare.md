@@ -127,7 +127,7 @@ In this case, you need to convert the official annotations to this style. We pro
 
 ```shell
 # SHIFT discrete (images, detection-like)
-python -m scalabel.label.to_coco -m det -i $DATADIR/shift/discrete/images/$SET_NAME/front/det_2d.json -o $DATADIR/shift/discrete/images/$SET_NAME/front/det_2d_cocoformat.json
+python -m scalabel.label.to_coco -m box_track -i $DATADIR/shift/discrete/images/$SET_NAME/front/det_2d.json -o $DATADIR/shift/discrete/images/$SET_NAME/front/det_2d_cocoformat.json
 
 # SHIFT continuous (videos, tracking-like)
 python -m scalabel.label.to_coco -m box_track -i $DATADIR/shift/continuous/videos/1x/$SET_NAME/front/det_2d.json -o $DATADIR/shift/continuous/videos/1x/$SET_NAME/front/det_2d_cocoformat.json

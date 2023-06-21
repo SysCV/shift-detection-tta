@@ -4,17 +4,14 @@ conda activate shift-tta
 
 conda install pytorch=1.11.0 torchvision cudatoolkit=11.3 -c pytorch -y
 
-pip install --no-input mmengine
-
-# install the latest mmcv
-pip install --no-input 'mmcv>=2.0.0rc1' -f https://download.openmmlab.com/mmcv/dist/cu113/torch1.11.0/index.html
-
-# install mmdetection
-pip install --no-input 'mmdet>=3.0.0rc0'
-
-# install mmtracking
-pip install --no-input 'mmtrack>=1.0.0rc1' 
+pip install -U openmim
+python -m pip install git+ssh://git@github.com/open-mmlab/mmengine.git@main
+mim install 'mmcv == 2.0.0rc4'
+mim install 'mmdet == 3.0.0rc5'
+python -m pip install git+ssh://git@github.com/open-mmlab/mmclassification.git@dev-1.x
+python -m pip install git+ssh://git@github.com/open-mmlab/mmtracking.git@dev-1.x
+python -m pip install --no-input -r requirements.txt
+python -m pip install git+https://github.com/JonathonLuiten/TrackEval.git
 
 # install shift-detection-tta
-pip install --no-input -r requirements/build.txt
 pip install --no-input -v -e .

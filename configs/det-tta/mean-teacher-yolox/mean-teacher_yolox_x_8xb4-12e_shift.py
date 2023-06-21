@@ -24,7 +24,7 @@ model = dict(
         ]),
     detector=dict(
         _scope_='mmdet',
-        bbox_head=dict(num_classes=1),
+        bbox_head=dict(num_classes=6),
         test_cfg=dict(score_thr=0.01, nms=dict(type='nms', iou_threshold=0.7)),
         init_cfg=dict(
             type='Pretrained',
@@ -107,7 +107,6 @@ train_dataloader = dict(
             type='mmdet.CocoDataset',
             data_root=data_root,
             ann_file=data_root + 'discrete/images/train/front/det_2d_cocoformat.json',
-            ann_file='annotations/half-train_cocoformat.json',
             # TODO: mmdet use img as key, but img_path is needed
             data_prefix=dict(img=''),
             filter_cfg=dict(filter_empty_gt=True, min_size=32),

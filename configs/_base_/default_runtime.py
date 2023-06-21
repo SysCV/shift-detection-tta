@@ -1,4 +1,4 @@
-default_scope = 'mmtrack'
+default_scope = 'shift_tta'
 
 default_hooks = dict(
     timer=dict(type='IterTimerHook'),
@@ -6,7 +6,9 @@ default_hooks = dict(
     param_scheduler=dict(type='ParamSchedulerHook'),
     checkpoint=dict(type='CheckpointHook', interval=1),
     sampler_seed=dict(type='DistSamplerSeedHook'),
-    visualization=dict(type='TrackVisualizationHook', draw=False),
+    visualization=dict(
+        type='mmtrack.TrackVisualizationHook',
+        draw=False),
 )
 
 env_cfg = dict(
@@ -17,7 +19,7 @@ env_cfg = dict(
 
 vis_backends = [dict(type='LocalVisBackend')]
 visualizer = dict(
-    type='TrackLocalVisualizer', vis_backends=vis_backends, name='visualizer')
+    type='mmtrack.TrackLocalVisualizer', vis_backends=vis_backends, name='visualizer')
 
 log_level = 'INFO'
 load_from = None

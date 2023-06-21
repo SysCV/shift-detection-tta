@@ -18,12 +18,7 @@ def register_all_modules(init_default_scope: bool = True) -> None:
     """  # noqa
     import shift_tta.fileio  # noqa: F401,F403
     import shift_tta.datasets  # noqa: F401,F403
-    import shift_tta.datasets.samplers  # noqa: F401,F403
-    import shift_tta.datasets.transforms  # noqa: F401,F403
-    import shift_tta.engine  # noqa: F401,F403
-    import shift_tta.evaluation  # noqa: F401,F403
     import shift_tta.models  # noqa: F401,F403
-    import shift_tta.visualization  # noqa: F401,F403
 
     # register parent modules
     register_all_mmtrack_modules(init_default_scope=False)

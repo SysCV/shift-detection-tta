@@ -15,7 +15,7 @@ MMDET_MIN = '3.0.0rc0'
 MMDET_MAX = '3.0.0'
 
 MMTRACK_MIN = '1.0.0rc1'
-MMTRACK_MAX = '1.0.0rc1'
+MMTRACK_MAX = '1.0.0'
 
 
 def digit_version(version_str: str, length: int = 4):

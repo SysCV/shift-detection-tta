@@ -6,9 +6,10 @@ from zipfile import ZipFile
 from pathlib import Path
 from typing import Literal, Union
 
-from mmengine.fileio.backends.base import BaseStorageBackend
+from mmengine.fileio.backends import BaseStorageBackend, register_backend
 
 
+@register_backend('zip')
 class ZipBackend(BaseStorageBackend):
     """Backend for loading data from .zip files.
 
