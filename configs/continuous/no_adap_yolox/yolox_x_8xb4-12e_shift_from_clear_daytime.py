@@ -1,19 +1,19 @@
 _base_ = [
     '../../_base_/models/yolox_x_8x8.py',
-    '../../_base_/datasets/shift.py',
     '../../_base_/default_runtime.py'
 ]
 
 dataset_type = 'SHIFTDataset'
 data_root = 'data/shift/'
+attributes = dict(weather_coarse='clear', timeofday_coarse='daytime')
 
 img_scale = (800, 1440)
-batch_size = 4
+batch_size = 2
 
 model = dict(
     type='AdaptiveYOLOX',
     data_preprocessor=dict(
-        type='TrackDataPreprocessor',
+        type='mmtrack.TrackDataPreprocessor',
         pad_size_divisor=32,
         batch_augments=[
             dict(
@@ -31,22 +31,9 @@ model = dict(
             checkpoint=  # noqa: E251
             'https://download.openmmlab.com/mmdetection/v2.0/yolox/yolox_x_8x8_300e_coco/yolox_x_8x8_300e_coco_20211126_140254-1ef88d67.pth'  # noqa: E501
         )),
-    adapter=dict(
-        type='MeanTeacherYOLOXAdapter',
-        obj_score_thrs=dict(high=0.6, low=0.1),
-        init_track_thr=0.7,
-        weight_iou_with_det_scores=True,
-        match_iou_thrs=dict(high=0.1, low=0.5, tentative=0.3),
-        num_frames_retain=30))
+    adapter=None)
 
 train_pipeline = [
-    dict(type='LoadImageFromFile', 
-         backend_args=dict(
-             backend='ZipBackend',
-             tar_path=data_root + 'discrete/images/train/front/img_decompressed.tar',
-         )
-    ),
-    dict(type='LoadTrackAnnotations'),
     dict(
         type='mmdet.Mosaic',
         img_scale=img_scale,
@@ -78,62 +65,84 @@ train_pipeline = [
         type='mmdet.FilterAnnotations',
         min_gt_bbox_wh=(1, 1),
         keep_empty=False),
-    dict(type='PackTrackInputs', pack_single_img=True)
+    dict(type='mmtrack.PackTrackInputs', pack_single_img=True)
 ]
 test_pipeline = [
     dict(type='LoadImageFromFile',
+        #  backend_args=dict(
+        #      backend='zip',
+        #      zip_path=data_root + 'discrete/images/val/front/img.zip',
+        #  )
          backend_args=dict(
-             backend='TarBackend',
+             backend='tar',
              tar_path=data_root + 'continuous/videos/val/front/img_decompressed.tar',
          )
     ),
+    dict(type='mmtrack.LoadTrackAnnotations'),
     dict(type='mmdet.Resize', scale=img_scale, keep_ratio=True),
     dict(
         type='mmdet.Pad',
         size_divisor=32,
         pad_val=dict(img=(114.0, 114.0, 114.0))),
-    dict(type='PackTrackInputs', pack_single_img=True)
+    dict(type='mmtrack.PackTrackInputs', pack_single_img=True)
 ]
 
+train_dataset = dict(
+    # use MultiImageMixDataset wrapper to support mosaic and mixup
+    type='mmdet.MultiImageMixDataset',
+    dataset=dict(
+        type='SHIFTDataset',
+        load_as_video=False,
+        ann_file=data_root + 'discrete/images/train/front/det_2d_cocoformat.json',
+        data_prefix=dict(img=''),
+        ref_img_sampler=None,
+        metainfo=dict(classes=('pedestrian', 'car', 'truck', 'bus', 'motorcycle', 'bicycle')),
+        pipeline=[
+            dict(type='LoadImageFromFile', 
+                backend_args=dict(
+                    backend='zip',
+                    zip_path=data_root + 'discrete/images/train/front/img.zip',
+                )
+            ),
+            dict(type='mmtrack.LoadTrackAnnotations'),
+        ],
+        filter_cfg=dict(
+            attributes=attributes,
+            filter_empty_gt=False,
+            min_size=32
+        )),
+    pipeline=train_pipeline)
 train_dataloader = dict(
-    _delete_=True,
     batch_size=batch_size,
     num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
-    dataset=dict(
-        type='mmdet.MultiImageMixDataset',
-        dataset=dict(
-            type='mmdet.CocoDataset',
-            data_root=data_root,
-            ann_file=data_root + 'discrete/images/train/front/det_2d_cocoformat.json',
-            # TODO: mmdet use img as key, but img_path is needed
-            data_prefix=dict(img=''),
-            filter_cfg=dict(filter_empty_gt=True, min_size=32),
-            metainfo=dict(CLASSES=('pedestrian', 'car', 'truck', 'bus', 'motorcycle', 'bicycle')),
-            pipeline=train_pipeline))
-)
-# TODO: this is the dataloader for validating the detector with adapter. 
-# make dataloader for discrete val set for source domain evaluation without adapter
+    dataset=train_dataset)
+
+val_dataset=dict(
+    type='SHIFTDataset',
+    # load_as_video=False,
+    load_as_video=True,
+    # ann_file=data_root + 'discrete/images/val/front/det_2d_cocoformat.json',
+    ann_file=data_root + 'continuous/videos/1x/val/front/det_2d_cocoformat.json',
+    data_prefix=dict(img=''),
+    ref_img_sampler=None,
+    test_mode=True,
+    filter_cfg=dict(attributes=attributes),
+    pipeline=test_pipeline,
+    metainfo=dict(classes=('pedestrian', 'car', 'truck', 'bus', 'motorcycle', 'bicycle')))
 val_dataloader = dict(
-    batch_size=1,
-    num_workers=2,
+    batch_size=batch_size,
+    num_workers=4,
     persistent_workers=True,
     drop_last=False,
-    sampler=dict(type='VideoSampler'),
-    dataset=dict(
-        type=dataset_type,
-        data_root=data_root,
-        ann_file=data_root + 'continuous/videos/val/front/det_2d_cocoformat.json',
-        data_prefix=dict(img_path=''),
-        ref_img_sampler=None,
-        load_as_video=True,
-        test_mode=True,
-        pipeline=test_pipeline))
+    # sampler=dict(type='DefaultSampler', shuffle=False),
+    sampler=dict(type='VideoSampler', shuffle=False),
+    dataset=val_dataset)
 test_dataloader = val_dataloader
 # optimizer
 # default 8 gpu
-lr = 0.001 / 8 * batch_size
+lr = 0.0005 / 8 * batch_size
 optim_wrapper = dict(
     type='OptimWrapper',
     optimizer=dict(
@@ -183,7 +192,7 @@ param_scheduler = [
 
 custom_hooks = [
     dict(
-        type='YOLOXModeSwitchHook',
+        type='mmtrack.YOLOXModeSwitchHook',
         num_last_epochs=num_last_epochs,
         priority=48),
     dict(type='mmdet.SyncNormHook', priority=48),
@@ -198,7 +207,7 @@ default_hooks = dict(checkpoint=dict(interval=1))
 
 # evaluator
 val_evaluator = [
-    dict(type='CocoVideoMetric', metric=['bbox'], classwise=True),
+    dict(type='mmtrack.CocoVideoMetric', metric=['bbox'], classwise=True),
 ]
 
 test_evaluator = val_evaluator
