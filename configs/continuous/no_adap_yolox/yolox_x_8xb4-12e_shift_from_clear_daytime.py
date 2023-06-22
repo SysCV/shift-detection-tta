@@ -75,7 +75,7 @@ test_pipeline = [
         #  )
          backend_args=dict(
              backend='tar',
-             tar_path=data_root + 'continuous/videos/val/front/img_decompressed.tar',
+             tar_path=data_root + 'continuous/videos/1x/val/front/img_decompressed.tar',
          )
     ),
     dict(type='mmtrack.LoadTrackAnnotations'),
@@ -124,7 +124,8 @@ val_dataset=dict(
     # load_as_video=False,
     load_as_video=True,
     # ann_file=data_root + 'discrete/images/val/front/det_2d_cocoformat.json',
-    ann_file=data_root + 'continuous/videos/1x/val/front/det_2d_cocoformat.json',
+    # ann_file=data_root + 'continuous/videos/1x/val/front/det_2d_cocoformat.json',
+    ann_file=data_root + 'continuous/videos/1x/val/front/det_2d_cocoformat_tmp.json',
     data_prefix=dict(img=''),
     ref_img_sampler=None,
     test_mode=True,
@@ -137,7 +138,7 @@ val_dataloader = dict(
     persistent_workers=True,
     drop_last=False,
     # sampler=dict(type='DefaultSampler', shuffle=False),
-    sampler=dict(type='VideoSampler', shuffle=False),
+    sampler=dict(type='mmtrack.VideoSampler'),
     dataset=val_dataset)
 test_dataloader = val_dataloader
 # optimizer

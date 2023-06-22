@@ -66,7 +66,8 @@ class SHIFTDataset(BaseVideoDataset):
             raw_img_info = coco.load_imgs([img_ids[0]])[0]
             if check_attributes(
                 raw_img_info['attributes'], self.filter_cfg['attributes']):
-                valid_data_indices.extend(range(data_id, len(img_ids)))
+                valid_data_indices.extend(
+                    list(range(data_id, data_id + len(img_ids))))
             data_id += len(img_ids)
 
         set_valid_data_indices = set(self.valid_data_indices)
@@ -74,7 +75,6 @@ class SHIFTDataset(BaseVideoDataset):
             id for id in valid_data_indices if id in set_valid_data_indices
         ]
         return valid_data_indices
-
 
     def _filter_image_by_attributes(self):
         """Filter image annotations according to filter_cfg.attributes.
@@ -95,7 +95,6 @@ class SHIFTDataset(BaseVideoDataset):
             id for id in valid_data_indices if id in set_valid_data_indices
         ]
         return valid_data_indices
-
 
     def filter_data(self) -> List[int]:
         """Filter annotations according to filter_cfg.
