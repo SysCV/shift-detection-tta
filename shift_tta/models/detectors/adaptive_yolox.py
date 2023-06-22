@@ -6,7 +6,7 @@ from torch import Tensor
 
 from mmtrack.utils import OptConfigType, OptMultiConfig, SampleList
 
-from shift_tta.registry import MODELS, TASK_UTILS
+from shift_tta.registry import MODELS
 from .base import BaseAdaptiveDetector
 
 
@@ -94,11 +94,6 @@ class AdaptiveYOLOX(BaseAdaptiveDetector):
 
         data_sample = data_samples[0]
 
-        det_results = self.detector.predict(img, data_samples)
-        assert len(det_results) == 1, 'Batch inference is not supported.'
-        data_sample.pred_det_instances = \
-            det_results[0].pred_instances.clone()
-
         if self.with_adapter:
             adapted_det_instances = self.adapter.adapt(
                 model=self,
@@ -108,6 +103,9 @@ class AdaptiveYOLOX(BaseAdaptiveDetector):
                 **kwargs)
             data_sample.pred_det_instances = adapted_det_instances
         else:
-            pass
+            det_results = self.detector.predict(img, data_samples)
+            assert len(det_results) == 1, 'Batch inference is not supported.'
+            data_sample.pred_det_instances = \
+                det_results[0].pred_instances.clone()
 
         return [data_sample]

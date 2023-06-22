@@ -6,18 +6,16 @@ import torch
 from mmengine.structures import InstanceData
 from mmtrack.structures import TrackDataSample
 
+from shift_tta.registry import MODELS
 from .base_adapter import BaseAdapter
 
 
+@MODELS.register_module()
 class CustomAdapter(BaseAdapter):
     """Custom adapter model.
 
     This a template class for implementing your own adapter module.
 
-    Args:
-        episodic (bool, optional). If episodic is True, the model will be reset
-            to its initial state at the end of every evaluated sequence.
-            Defaults to True.
     """
 
     def __init__(self, *args, **kwargs) -> None:
@@ -44,7 +42,7 @@ class CustomAdapter(BaseAdapter):
                 It includes information such as `pred_det_instances`.
 
         Returns:
-            :obj:`InstanceData`: Tracking results of the input images.
+            :obj:`InstanceData`: Detection results of the input images.
             Each InstanceData usually contains ``bboxes``, ``labels``,
             ``scores`` and ``instances_id``.
         """
@@ -54,7 +52,7 @@ class CustomAdapter(BaseAdapter):
         scores = data_sample.pred_det_instances.scores
 
         frame_id = metainfo.get('frame_id', -1)
-        if frame_id == 0:
+        if self.with_episodic and frame_id == 0:
             self.reset(model)
         
         # adapt model

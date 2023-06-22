@@ -26,8 +26,6 @@ class BaseAdapter(metaclass=ABCMeta):
 
         self.source_model_state = None
 
-        self.reset()
-
     def _init_source_model_state(self, model) -> None:
         """Init self.source_model_state.
         
@@ -59,7 +57,7 @@ class BaseAdapter(metaclass=ABCMeta):
             self._restore_source_model_state(model)
 
     @property
-    def episodic(self) -> bool:
+    def with_episodic(self) -> bool:
         """Whether the model has to be reset at the end of every sequence."""
         return True if self.episodic else False
 
@@ -85,7 +83,7 @@ class BaseAdapter(metaclass=ABCMeta):
                 It includes information such as `pred_det_instances`.
 
         Returns:
-            :obj:`InstanceData`: Tracking results of the input images.
+            :obj:`InstanceData`: Detection results of the input images.
             Each InstanceData usually contains ``bboxes``, ``labels``,
             ``scores`` and ``instances_id``.
         """
@@ -95,7 +93,7 @@ class BaseAdapter(metaclass=ABCMeta):
         scores = data_sample.pred_det_instances.scores
 
         frame_id = metainfo.get('frame_id', -1)
-        if self.episodic and frame_id == 0:
+        if self.with_episodic and frame_id == 0:
             self.reset(model)
         
         # adapt model
