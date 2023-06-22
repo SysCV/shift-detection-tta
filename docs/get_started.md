@@ -152,11 +152,13 @@ pip install 'mmtrack>=1.0.0rc1'
 git clone git@github.com:SysCV/shift-detection-tta.git
 cd shift-detection-tta
 pip install -r requirements/build.txt
+python -m pip install git+https://github.com/JonathonLuiten/TrackEval.git  # for compatibility with mmtrack
+python -m pip install git+https://github.com/scalabel/scalabel.git
 pip install -v -e .
 ```
 
 
-Alternatively, clone the repository and directly run the install script [setup_env.sh](tools/install/setup_env.sh):
+Alternatively (and recommended), clone the repository and directly run the install script [setup_env.sh](tools/install/setup_env.sh):
 
 ```shell
 git clone git@github.com:SysCV/shift-detection-tta.git

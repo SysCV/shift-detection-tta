@@ -73,10 +73,6 @@ test_pipeline = [
              backend='zip',
              zip_path=data_root + 'discrete/images/val/front/img.zip',
          )
-        #  backend_args=dict(
-        #      backend='tar',
-        #      tar_path=data_root + 'continuous/videos/val/front/img_decompressed.tar',
-        #  )
     ),
     dict(type='mmtrack.LoadTrackAnnotations'),
     dict(type='mmdet.Resize', scale=img_scale, keep_ratio=True),
@@ -122,7 +118,6 @@ train_dataloader = dict(
 val_dataset=dict(
     type='SHIFTDataset',
     load_as_video=False,
-    # load_as_video=True,
     ann_file=data_root + 'discrete/images/val/front/det_2d_cocoformat.json',
     data_prefix=dict(img=''),
     ref_img_sampler=None,
@@ -136,7 +131,6 @@ val_dataloader = dict(
     persistent_workers=True,
     drop_last=False,
     sampler=dict(type='DefaultSampler', shuffle=False),
-    # sampler=dict(type='VideoSampler', shuffle=False),
     dataset=val_dataset)
 test_dataloader = val_dataloader
 # optimizer
@@ -153,7 +147,7 @@ optim_wrapper = dict(
 total_epochs = 24
 num_last_epochs = 2
 resume_from = None
-interval = 5
+interval = 2
 
 train_cfg = dict(
     type='EpochBasedTrainLoop', max_epochs=total_epochs, val_interval=1)
@@ -164,7 +158,6 @@ param_scheduler = [
     dict(
         # use quadratic formula to warm up 1 epochs
         # and lr is updated by iteration
-        # TODO: fix default scope in get function
         type='mmdet.QuadraticWarmupLR',
         by_epoch=True,
         begin=0,
@@ -208,5 +201,4 @@ default_hooks = dict(checkpoint=dict(interval=1))
 val_evaluator = [
     dict(type='mmtrack.CocoVideoMetric', metric=['bbox'], classwise=True),
 ]
-
 test_evaluator = val_evaluator

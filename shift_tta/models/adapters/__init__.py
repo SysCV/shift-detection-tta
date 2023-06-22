@@ -1,7 +1,7 @@
 from .base_adapter import BaseAdapter
-from .mean_teacher_yolox import MeanTeacherYOLOXAdapter
+from .custom_adapter import CustomAdapter
 
 __all__ = [
     'BaseAdapter',
-    'MeanTeacherYOLOXAdapter'
+    'CustomAdapter'
 ]

@@ -5,7 +5,7 @@ _base_ = [
 
 dataset_type = 'SHIFTDataset'
 data_root = 'data/shift/'
-attributes = None
+attributes = dict(weather_coarse='clear', timeofday_coarse='daytime')
 
 img_scale = (800, 1440)
 batch_size = 2
@@ -31,7 +31,10 @@ model = dict(
             checkpoint=  # noqa: E251
             'https://download.openmmlab.com/mmdetection/v2.0/yolox/yolox_x_8x8_300e_coco/yolox_x_8x8_300e_coco_20211126_140254-1ef88d67.pth'  # noqa: E501
         )),
-    adapter=None)
+    adapter=dict(
+        type='CustomAdapter',  # TODO: this is your adapter, edit it
+        episodic=True,  # do NOT change this. episodic must be set to True for the WVCL ICCV 2023 SHIFT Challenges 
+    ))
 
 train_pipeline = [
     dict(
@@ -70,13 +73,9 @@ train_pipeline = [
 test_pipeline = [
     dict(type='LoadImageFromFile',
          backend_args=dict(
-             backend='zip',
-             zip_path=data_root + 'discrete/images/val/front/img.zip',
+             backend='tar',
+             tar_path=data_root + 'continuous/videos/1x/val/front/img_decompressed.tar',
          )
-        #  backend_args=dict(
-        #      backend='tar',
-        #      tar_path=data_root + 'continuous/videos/val/front/img_decompressed.tar',
-        #  )
     ),
     dict(type='mmtrack.LoadTrackAnnotations'),
     dict(type='mmdet.Resize', scale=img_scale, keep_ratio=True),
@@ -121,9 +120,9 @@ train_dataloader = dict(
 
 val_dataset=dict(
     type='SHIFTDataset',
-    load_as_video=False,
-    # load_as_video=True,
-    ann_file=data_root + 'discrete/images/val/front/det_2d_cocoformat.json',
+    load_as_video=True,
+    # ann_file=data_root + 'continuous/videos/1x/val/front/det_2d_cocoformat.json',
+    ann_file=data_root + 'continuous/videos/1x/val/front/det_2d_cocoformat_tmp.json',
     data_prefix=dict(img=''),
     ref_img_sampler=None,
     test_mode=True,
@@ -135,8 +134,7 @@ val_dataloader = dict(
     num_workers=4,
     persistent_workers=True,
     drop_last=False,
-    sampler=dict(type='DefaultSampler', shuffle=False),
-    # sampler=dict(type='VideoSampler', shuffle=False),
+    sampler=dict(type='mmtrack.VideoSampler'),
     dataset=val_dataset)
 test_dataloader = val_dataloader
 # optimizer
@@ -164,7 +162,6 @@ param_scheduler = [
     dict(
         # use quadratic formula to warm up 1 epochs
         # and lr is updated by iteration
-        # TODO: fix default scope in get function
         type='mmdet.QuadraticWarmupLR',
         by_epoch=True,
         begin=0,
@@ -208,5 +205,4 @@ default_hooks = dict(checkpoint=dict(interval=1))
 val_evaluator = [
     dict(type='mmtrack.CocoVideoMetric', metric=['bbox'], classwise=True),
 ]
-
 test_evaluator = val_evaluator

@@ -1,16 +1,18 @@
 # Copyright (c) OpenMMLab. All rights reserved.
-from abc import ABCMeta, abstractmethod
 from typing import List
 
 import torch
-from copy import deepcopy
 
 from mmengine.structures import InstanceData
 from mmtrack.structures import TrackDataSample
 
+from .base_adapter import BaseAdapter
 
-class BaseAdapter(metaclass=ABCMeta):
-    """Base adapter model.
+
+class CustomAdapter(BaseAdapter):
+    """Custom adapter model.
+
+    This a template class for implementing your own adapter module.
 
     Args:
         episodic (bool, optional). If episodic is True, the model will be reset
@@ -18,52 +20,9 @@ class BaseAdapter(metaclass=ABCMeta):
             Defaults to True.
     """
 
-    def __init__(self,
-                 episodic: bool = True) -> None:
-        super().__init__()
-        self.episodic = episodic
-        self.fp16_enabled = False
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
 
-        self.source_model_state = None
-
-        self.reset()
-
-    def _init_source_model_state(self, model) -> None:
-        """Init self.source_model_state.
-        
-        Args:
-            model (nn.Module): detection model.
-        """
-        self.source_model_state = deepcopy(model.state_dict())
-
-    def _restore_source_model_state(self, model) -> None:
-        """Init self.source_model_state.
-        
-        Args:
-            model (nn.Module): detection model.
-        """
-
-        if self.source_model_state is None:
-            raise Exception("cannot reset without saved model state")
-        model.load_state_dict(self.source_model_state, strict=True)
-
-    def reset(self, model) -> None:
-        """Reset the model state to self.source_model_state.
-        
-        Args:
-            model (nn.Module): detection model.
-        """
-        if self.source_model_state is None:
-            self._init_source_model_state(model)
-        else:
-            self._restore_source_model_state(model)
-
-    @property
-    def episodic(self) -> bool:
-        """Whether the model has to be reset at the end of every sequence."""
-        return True if self.episodic else False
-
-    @abstractmethod
     def _adapt(self, *args, **kwargs):
         """Adapt the model."""
         pass
@@ -95,7 +54,7 @@ class BaseAdapter(metaclass=ABCMeta):
         scores = data_sample.pred_det_instances.scores
 
         frame_id = metainfo.get('frame_id', -1)
-        if self.episodic and frame_id == 0:
+        if frame_id == 0:
             self.reset(model)
         
         # adapt model

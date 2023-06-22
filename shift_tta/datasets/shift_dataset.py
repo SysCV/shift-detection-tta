@@ -29,7 +29,6 @@ class SHIFTDataset(BaseVideoDataset):
         self.attributes = attributes
         super().__init__(*args, **kwargs)
 
-
     def filter_by_attributes(self):
         """Filter annotations according to filter_cfg.attributes.
 
