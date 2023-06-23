@@ -46,4 +46,4 @@ ID=$(sbatch \
      ${CMD} \
           ${CONFIG} \
           ${GPUS} \
-          --checkpoint ${CKPT}
+          --checkpoint ${CKPT})
