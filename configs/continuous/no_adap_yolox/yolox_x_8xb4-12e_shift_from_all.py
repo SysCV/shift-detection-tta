@@ -5,7 +5,7 @@ _base_ = [
 
 dataset_type = 'SHIFTDataset'
 data_root = 'data/shift/'
-attributes = dict(weather_coarse='clear', timeofday_coarse='daytime')
+attributes = None
 
 img_scale = (800, 1440)
 batch_size = 2

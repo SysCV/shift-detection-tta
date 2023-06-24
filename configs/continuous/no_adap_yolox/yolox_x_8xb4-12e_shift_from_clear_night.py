@@ -5,7 +5,7 @@ _base_ = [
 
 dataset_type = 'SHIFTDataset'
 data_root = 'data/shift/'
-attributes = dict(weather_coarse='clear', timeofday_coarse='daytime')
+attributes = dict(weather_coarse='clear', timeofday_coarse='night')
 
 img_scale = (800, 1440)
 batch_size = 2
@@ -31,10 +31,7 @@ model = dict(
             checkpoint=  # noqa: E251
             'https://download.openmmlab.com/mmdetection/v2.0/yolox/yolox_x_8x8_300e_coco/yolox_x_8x8_300e_coco_20211126_140254-1ef88d67.pth'  # noqa: E501
         )),
-    adapter=dict(
-        type='CustomAdapter',  # TODO: this is your adapter, edit it
-        episodic=True,  # do NOT change this. episodic must be set to True for the WVCL ICCV 2023 SHIFT Challenges 
-    ))
+    adapter=None)
 
 train_pipeline = [
     dict(
@@ -203,6 +200,6 @@ default_hooks = dict(checkpoint=dict(interval=1))
 
 # evaluator
 val_evaluator = [
-    dict(type='mmtrack.CocoVideoMetric', metric=['bbox'], classwise=True),
+    dict(type='SHIFTVideoMetric', metric=['bbox'], classwise=True),
 ]
 test_evaluator = val_evaluator
