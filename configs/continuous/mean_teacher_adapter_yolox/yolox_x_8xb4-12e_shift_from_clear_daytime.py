@@ -162,8 +162,8 @@ train_dataloader = dict(
 val_dataset=dict(
     type='SHIFTDataset',
     load_as_video=True,
-    # ann_file=data_root + 'continuous/videos/1x/val/front/det_2d_cocoformat.json',
-    ann_file=data_root + 'continuous/videos/1x/val/front/det_2d_cocoformat_tmp.json',
+    ann_file=data_root + 'continuous/videos/1x/val/front/det_2d_cocoformat.json',
+    # ann_file=data_root + 'continuous/videos/1x/val/front/det_2d_cocoformat_tmp.json',
     data_prefix=dict(img=''),
     ref_img_sampler=None,
     test_mode=True,
