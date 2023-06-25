@@ -3,11 +3,15 @@
   <div>&nbsp;</div>
   <div align="center">
     <a href="https://www.vis.xyz/shift/">
-    <b><font size="5">SHIFT dataset website</font></b>
+    <b><font size="5">\[SHIFT Project Page\]</font></b>
+    </a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://go.yf.io/shift-paper">
+    <b><font size="5">\[SHIFT Paper \(CVPR 2022\)\]</font></b>
     </a>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <a href="https://www.vis.xyz/">
-    <b><font size="5">VIS Group website</font></b>
+    <b><font size="5">\[VIS Group\]</font></b>
     </a>
   </div>
   <div>&nbsp;</div>
@@ -15,7 +19,7 @@
 
 ## Introduction
 
-SHIFT is a driving dataset for continuous multi-task domain adaptation. It is maintained by the [VIS](https://www.vis.xyz/) group at ETH Zurich.
+[SHIFT](https://www.vis.xyz/shift/) is a driving dataset for continuous multi-task domain adaptation. It is maintained by the [VIS Group](https://www.vis.xyz/) at ETH Zurich.
 
 The main branch works with **PyTorch1.6+**.
 

@@ -30,6 +30,6 @@ Notice that the validation set should be used for validating your method under c
 
 ### Submit your results 
 
-
-
 Submit also a report and, optionally, submit your code if you want your adapter included in the repo.
+
+http://34.237.207.206/web/challenges/challenge-page/6/overview
