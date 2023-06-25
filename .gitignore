@@ -120,6 +120,7 @@ shift_tta.egg_info
 errors/
 outputs/
 checkpoints/
+scripts/tmp/
 
 # Pytorch
 *.pth
