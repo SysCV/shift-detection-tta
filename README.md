@@ -24,7 +24,7 @@
 The main branch works with **PyTorch1.6+**.
 
 <div align="center">
-  <video src="https://www.youtube.com/watch?v=BsqGrDd2Kzw"  width="800"></video>
+  <video src='resources/shift-teaser.mp4' />
 </div>
 
 ## Tutorial
