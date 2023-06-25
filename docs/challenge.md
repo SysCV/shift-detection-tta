@@ -22,7 +22,7 @@ You can find a reference training script at [scripts/source/train_yolox_shift_cl
 
 We use the discrete set of SHIFT to train the object detector.
 
-You can also download a YOLOX checkpoint pre-trained using the above-mentioned script at []().
+You can also download a YOLOX checkpoint pre-trained using the above-mentioned script at [link](https://dl.cv.ethz.ch/shift/challenge2023/test_time_adaptation/checkpoints/yolox_x_8xb4-24e_shift_clear_daytime.pth).
 
 ### Test the source model on the target domain
 Then, validate the source model on the validation set of the continuous target domain. In particular, we validate on the videos presenting continuous domain shift starting from the clear-daytime conditions. The validation set should be used for validating your method under continuous domain shift and for hyperparameter search.
@@ -38,7 +38,7 @@ We implemented a baseline adapter based on a detection consistency loss and a me
 You can run the adaptation script on the validation set using [scripts/continuous/mean_teacher_adapter_yolox/val_yolox_shift_from_clear_daytime.sh](scripts/continuous/mean_teacher_adapter_yolox/val_yolox_shift_from_clear_daytime.sh)
 
 ### Continuously adapt a model to the test target domain 
-Finally, collect your results on the test set and submit to our evaluation [benchmark](). 
+Finally, collect your results on the test set and submit to our evaluation [benchmark](https://evalai.vis.xyz/web/challenges/challenge-page/6/overview). 
 
 You can now test your test-time adaptation baseline on the test videos presenting continuous domain shift starting from the clear-daytime conditions.
 
@@ -57,7 +57,6 @@ declare -a CFG_OPTIONS=(
 )
 ```
 
-Identify the file ending with `.scalabel.json` and submit it to our [evaluation benchmark](
-http://34.237.207.206/web/challenges/challenge-page/6/overview) to participate in the challenge.
+Identify the file ending with `.scalabel.json` and submit it to our [evaluation benchmark](https://evalai.vis.xyz/web/challenges/challenge-page/6/overview) to participate in the challenge.
 
 We require participants to submit a short report providing details on their solution. Optionally, participant may submit their code or open a pull request after the challenge deadline if they want their adapter included in this repository.
