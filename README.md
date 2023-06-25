@@ -3,15 +3,15 @@
   <div>&nbsp;</div>
   <div align="center">
     <a href="https://www.vis.xyz/shift/">
-    <b><font size="5">[SHIFT Project Page]</font></b>
+    <b><font size="5">[ SHIFT Project Page ]</font></b>
     </a>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <a href="https://go.yf.io/shift-paper">
-    <b><font size="5">[SHIFT Paper (CVPR 2022)]</font></b>
+    <b><font size="5">[ SHIFT Paper (CVPR 2022) ]</font></b>
     </a>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <a href="https://www.vis.xyz/">
-    <b><font size="5">[VIS Group]</font></b>
+    <b><font size="5">[ VIS Group ]</font></b>
     </a>
   </div>
   <div>&nbsp;</div>
@@ -24,7 +24,9 @@
 The main branch works with **PyTorch1.6+**.
 
 <div align="center">
-  <video src='resources/shift-teaser.mp4' />
+  <video width="320" height="240" controls>
+    <source src="resources/shift-teaser.mp4" type="video/mp4">
+  </video>
 </div>
 
 ## Tutorial
