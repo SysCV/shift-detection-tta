@@ -24,7 +24,7 @@
 The main branch works with **PyTorch1.6+**.
 
 <div align="center">
-  <img src="https://www.youtube.com/watch?v=BsqGrDd2Kzw" width="800"/>
+  <video src="https://www.youtube.com/watch?v=BsqGrDd2Kzw"  width="800"></video>
 </div>
 
 ## Tutorial
