@@ -25,7 +25,7 @@ The main branch works with **PyTorch1.6+**.
 
 <div align="center">
   <video width="320" height="240" controls>
-    <source src="resources/shift-teaser.mp4" type="video/mp4">
+    <source src="https://github.com/SysCV/shift-detection-tta/assets/44324619/1b1640b8-d2be-43fd-a692-c4f586eea472" type="video/mp4">
   </video>
 
 https://github.com/SysCV/shift-detection-tta/assets/44324619/1b1640b8-d2be-43fd-a692-c4f586eea472
