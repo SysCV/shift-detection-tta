@@ -15,13 +15,12 @@
 
 ## Introduction
 
-SHIFT is a driving dataset for continuous multi-task domain adaptation. It is a maintained by the [VIS](https://www.vis.xyz/) group at ETH Zurich.
+SHIFT is a driving dataset for continuous multi-task domain adaptation. It is maintained by the [VIS](https://www.vis.xyz/) group at ETH Zurich.
 
-The master branch works with **PyTorch1.6+**.
+The main branch works with **PyTorch1.6+**.
 
-# TODO: put teaser video for SHIFT detection under domain shift here
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/24663779/103343312-c724f480-4ac6-11eb-9c22-b56f1902584e.gif" width="800"/>
+  <img src="https://www.youtube.com/watch?v=BsqGrDd2Kzw" width="800"/>
 </div>
 
 ## Tutorial
@@ -29,11 +28,13 @@ The master branch works with **PyTorch1.6+**.
 
 Please refer to [get_started.md](docs/get_started.md) for install instructions.
 
-Please refer to [inference.md](docs/inference.md) for the basic usage of our repository. If you want to train and test your own model, please see [dataset_prepare.md](docs/dataset_prepare.md) and [train_test.md](docs/train_test.md).
-
 ### Prepare the SHIFT dataset
 
-Please refer to [dataset_prepare.md](docs/get_started.md) for instructions on how to download and prepare the SHIFT dataset.
+Please refer to [dataset_prepare.md](docs/dataset_prepare.md) for instructions on how to download and prepare the SHIFT dataset.
+
+### Usage
+
+Please refer to [train_test.md](docs/train_test.md) for instructions on how to train and test your own model.
 
 ### Participate in the Challenge on Continual Test-time Adaptation for Object Detection
 
@@ -55,7 +56,7 @@ Results and models are available in the [model zoo](docs/model_zoo.md).
 
 Supported Adaptation Methods
 - [x] [no_adap](configs/continuous/no_adap_yolox)
-- [x] [custom_adapter](configs/continuous/custom_adapter_yolox)
+- [x] [mean_teacher_adapter_yolox](configs/continuous/mean_teacher_adapter_yolox)
 
 Supported Datasets
 

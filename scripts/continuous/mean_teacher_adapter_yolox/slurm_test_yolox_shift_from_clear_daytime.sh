@@ -14,16 +14,16 @@ CPUS_PER_TASK=${CPUS}
 ###############
 ##### Your args
 CONFIG=configs/continuous/mean_teacher_adapter_yolox/yolox_x_8xb4-12e_shift_from_clear_daytime.py
-CKPT=checkpoints/yolox_x_8xb4-24e_shift_clear_daytime/20230621_184939/epoch_24.pth
+CKPT=checkpoints/yolox_x_8xb4-24e_shift_clear_daytime.pth
 
 #####
 ###############
 
 if [ $GPUS -gt 1 ]
 then
-     CMD=scripts/run/dist_test.sh
+     CMD=tools/dist_test.sh
 else
-     CMD=scripts/run/test.sh
+     CMD=tools/test.sh
 fi
 
 echo "Launching ${CMD} on ${GPUS} gpus."

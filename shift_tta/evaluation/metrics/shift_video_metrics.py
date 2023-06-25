@@ -152,14 +152,14 @@ class SHIFTVideoMetric(CocoVideoMetric):
         bbox_ds = Dataset(frames=bbox_frames, groups=None, config=None)
 
         result_files = dict()
-        result_files['bbox'] = f'{outfile_prefix}.bbox.json'
-        result_files['proposal'] = f'{outfile_prefix}.bbox.json'
+        result_files['bbox'] = f'{outfile_prefix}.bbox.scalabel.json'
+        result_files['proposal'] = f'{outfile_prefix}.bbox.scalabel.json'
         with open(result_files['bbox'], "w") as f:
             f.write(bbox_ds.json(exclude_unset=True))
 
         if segm_frames is not None:
             segm_ds = Dataset(frames=segm_frames, groups=None, config=None)
-            result_files['segm'] = f'{outfile_prefix}.segm.json'
+            result_files['segm'] = f'{outfile_prefix}.segm.scalabel.json'
             with open(result_files['segm'], "w") as f:
                 f.write(segm_ds.json(exclude_unset=True))
 

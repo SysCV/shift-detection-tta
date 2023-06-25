@@ -38,7 +38,7 @@ CUDA_VISIBLE_DEVICES=-1 python tools/train.py ${CONFIG_FILE} [optional arguments
 An example of training the VID model DFF on CPU:
 
 ```shell script
-CUDA_VISIBLE_DEVICES=-1 python tools/train.py configs/vid/dff/dff_faster-rcnn_r50-dc5_8xb1-7e_imagenetvid.py
+CUDA_VISIBLE_DEVICES=-1 python tools/train.py configs/source/yolox/amp_yolox_x_8xb4-24e_shift_clear_daytime.py
 ```
 
 #### 2. Train on single GPU
@@ -54,7 +54,7 @@ You can use `export CUDA_VISIBLE_DEVICES=$GPU_ID` to select the GPU.
 An example of training the MOT model ByteTrack on single GPU:
 
 ```shell script
-CUDA_VISIBLE_DEVICES=2 python tools/train.py configs/mot/bytetrack/bytetrack_yolox_x_8xb4-80e_crowdhuman-mot17halftrain_test-mot17halfval.py
+CUDA_VISIBLE_DEVICES=2 python tools/train.py configs/source/yolox/amp_yolox_x_8xb4-24e_shift_clear_daytime.py
 ```
 
 #### 3. Train on single node multiple GPUs
@@ -80,7 +80,7 @@ CUDA_VISIBLE_DEVICES=4,5,6,7 PORT=29501 ./tools/dist_train.sh ${CONFIG_FILE} 4
 An example of training the SOT model SiameseRPN++ on single node multiple GPUs:
 
 ```shell script
-bash ./tools/dist_train.sh ./configs/sot/siamese_rpn/siamese-rpn_r50_8xb16-20e_imagenetvid-imagenetdet-coco_test-otb100.py 8
+bash ./tools/dist_train.sh configs/source/yolox/amp_yolox_x_8xb4-24e_shift_clear_daytime.py 8
 ```
 
 #### 4. Train on multiple nodes
@@ -113,7 +113,7 @@ The basic usage is as follows.
 bash ./tools/slurm_train.sh ${PARTITION} ${JOB_NAME} ${CONFIG_FILE} ${WORK_DIR} ${GPUS}
 ```
 
-An example of training the VIS model MaskTrack R-CNN with Slurm:
+An example of training the YOLOX detector on SHIFT clear-daytime with Slurm:
 
 ```shell script
 PORT=29501 \
@@ -121,9 +121,9 @@ GPUS_PER_NODE=8 \
 SRUN_ARGS="--quotatype=reserved" \
 bash ./tools/slurm_train.sh \
 mypartition \
-masktrack \
-configs/vis/masktrack_rcnn/masktrack-rcnn_mask-rcnn_r50_fpn_8xb1-12e_youtubevis2019.py \
-./work_dirs/MaskTrack_RCNN \
+YOLOX_shift_clear_daytime \
+configs/source/yolox/amp_yolox_x_8xb4-24e_shift_clear_daytime.py \
+./work_dirs/YOLOX_shift_clear_daytime \
 8
 ```
 
@@ -142,10 +142,10 @@ You can also manage jobs with Slurm.
 Important:
 
 - You can set the results saving path by modifying the key `outfile_prefix` in evaluator.
-  For example, `val_evaluator = dict(outfile_prefix='results/stark_st1_trackingnet')`.
+  For example, `val_evaluator = dict(outfile_prefix='results/YOLOX_shift_from_clear_daytime')`.
   Otherwise, a temporal file will be created and will be removed after evaluation.
 - If you just want the formatted results without evaluation, you can set `format_only=True`.
-  For example, `test_evaluator = dict(type='YouTubeVISMetric', metric='youtube_vis_ap', outfile_prefix='./youtube_vis_results', format_only=True)`
+  For example, `test_evaluator = dict(type='SHIFTVideoMetric', metric='bbox', outfile_prefix='results/YOLOX_shift_from_clear_daytime', format_only=True)`
 
 #### 1. Test on CPU
 
@@ -158,10 +158,10 @@ More details in [MMEngine](https://github.com/open-mmlab/mmengine/blob/ca282aee9
 CUDA_VISIBLE_DEVICES=-1 python tools/test.py ${CONFIG_FILE} [optional arguments]
 ```
 
-An example of testing the VID model DFF on CPU:
+An example of testing the YOLOX clear-daytime model on CPU:
 
 ```shell script
-CUDA_VISIBLE_DEVICES=-1 python tools/test.py configs/vid/dff/dff_faster-rcnn_r50-dc5_8xb1-7e_imagenetvid.py --checkpoint https://download.openmmlab.com/mmtracking/vid/dff/dff_faster_rcnn_r50_dc5_1x_imagenetvid/dff_faster_rcnn_r50_dc5_1x_imagenetvid_20201227_213250-548911a4.pth
+CUDA_VISIBLE_DEVICES=-1 python tools/test.py configs/source/yolox/amp_yolox_x_8xb4-24e_shift_clear_daytime.py --checkpoint checkpoints/yolox_x_8xb4-24e_shift_clear_daytime.pth
 ```
 
 #### 2. Test on single GPU
@@ -174,10 +174,10 @@ python tools/test.py ${CONFIG_FILE} [optional arguments]
 
 You can use `export CUDA_VISIBLE_DEVICES=$GPU_ID` to select the GPU.
 
-An example of testing the MOT model ByteTrack on single GPU:
+An example of testing the YOLOX clear-daytime model on single GPU:
 
 ```shell script
-CUDA_VISIBLE_DEVICES=2 python tools/test.py configs/mot/bytetrack/bytetrack_yolox_x_8xb4-80e_crowdhuman-mot17halftrain_test-mot17halfval.py --checkpoint https://download.openmmlab.com/mmtracking/mot/bytetrack/bytetrack_yolox_x/bytetrack_yolox_x_crowdhuman_mot17-private-half_20211218_205500-1985c9f0.pth
+CUDA_VISIBLE_DEVICES=2 python tools/test.py configs/source/yolox/amp_yolox_x_8xb4-24e_shift_clear_daytime.py --checkpoint checkpoints/yolox_x_8xb4-24e_shift_clear_daytime.pth
 ```
 
 #### 3. Test on single node multiple GPUs
@@ -189,10 +189,10 @@ The basic usage is as follows.
 bash ./tools/dist_test.sh ${CONFIG_FILE} ${GPU_NUM} [optional arguments]
 ```
 
-An example of testing the SOT model SiameseRPN++ on single node multiple GPUs:
+An example of testing the YOLOX clear-daytime model on single node multiple GPUs:
 
 ```shell script
-bash ./tools/dist_test.sh ./configs/sot/siamese_rpn/siamese-rpn_r50_8xb16-20e_imagenetvid-imagenetdet-coco_test-otb100.py 8 --checkpoint https://download.openmmlab.com/mmtracking/sot/siamese_rpn/siamese_rpn_r50_1x_otb100/siamese_rpn_r50_20e_otb100_20220421_144232-6b8f1730.pth
+bash ./tools/dist_test.sh configs/source/yolox/amp_yolox_x_8xb4-24e_shift_clear_daytime.py 8 --checkpoint checkpoints/yolox_x_8xb4-24e_shift_clear_daytime.pth
 ```
 
 #### 4. Test on multiple nodes
@@ -210,7 +210,7 @@ The basic usage is as follows.
 bash ./tools/slurm_test.sh ${PARTITION} ${JOB_NAME} ${CONFIG_FILE} ${GPUS}
 ```
 
-An example of testing the VIS model MaskTrack R-CNN with Slurm:
+An example of testing the YOLOX clear-daytime model with Slurm:
 
 ```shell script
 PORT=29501 \
@@ -218,8 +218,8 @@ GPUS_PER_NODE=8 \
 SRUN_ARGS="--quotatype=reserved" \
 bash ./tools/slurm_test.sh \
 mypartition \
-masktrack \
-configs/vis/masktrack_rcnn/masktrack-rcnn_mask-rcnn_r50_fpn_8xb1-12e_youtubevis2019.py \
+YOLOX_clear_daytime \
+configs/source/yolox/amp_yolox_x_8xb4-24e_shift_clear_daytime.py \
 8 \
---checkpoint https://download.openmmlab.com/mmtracking/vis/masktrack_rcnn/masktrack_rcnn_r50_fpn_12e_youtubevis2019/masktrack_rcnn_r50_fpn_12e_youtubevis2019_20211022_194830-6ca6b91e.pth
+--checkpoint checkpoints/yolox_x_8xb4-24e_shift_clear_daytime.pth
 ```

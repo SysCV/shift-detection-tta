@@ -23,9 +23,9 @@ declare -a CFG_OPTIONS=(
 
 if [ $GPUS -gt 1 ]
 then
-     CMD=scripts/run/dist_train.sh
+     CMD=tools/dist_train.sh
 else
-     CMD=scripts/run/train.sh
+     CMD=tools/train.sh
 fi
 
 echo "Launching ${CMD} on ${GPUS} gpus."
