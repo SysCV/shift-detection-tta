@@ -11,8 +11,8 @@ from .base import BaseAdaptiveDetector
 
 
 @MODELS.register_module()
-class AdaptiveYOLOX(BaseAdaptiveDetector):
-    """AdaptiveYOLOX: baseline test-time adaptation method for object detection.
+class AdaptiveDetector(BaseAdaptiveDetector):
+    """AdaptiveDetector: baseline test-time adaptation method for object detection.
 
     Args:
         detector (dict): Configuration of detector. Defaults to None.
@@ -86,11 +86,11 @@ class AdaptiveYOLOX(BaseAdaptiveDetector):
         img = inputs['img']
         assert img.dim() == 5, 'The img must be 5D Tensor (N, T, C, H, W).'
         assert img.size(0) == 1, \
-            'AdaptiveYOLOX inference only support 1 batch size per gpu for now.'
+            'AdaptiveDetector inference only support 1 batch size per gpu for now.'
         img = img[0]
 
         assert len(data_samples) == 1, \
-            'AdaptiveYOLOX inference only support 1 batch size per gpu for now.'
+            'AdaptiveDetector inference only support 1 batch size per gpu for now.'
 
         data_sample = data_samples[0]
 

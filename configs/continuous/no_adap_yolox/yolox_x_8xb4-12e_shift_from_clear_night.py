@@ -11,7 +11,7 @@ img_scale = (800, 1440)
 batch_size = 2
 
 model = dict(
-    type='AdaptiveYOLOX',
+    type='AdaptiveDetector',
     data_preprocessor=dict(
         type='mmtrack.TrackDataPreprocessor',
         pad_size_divisor=32,
