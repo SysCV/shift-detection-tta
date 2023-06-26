@@ -13,6 +13,13 @@ The goal of this challenge is training an object detector on the SHIFT clear-day
 
 You can find a reference implementation for an [AdaptiveDetector](shift_tta/models/detectors/adaptive_detector.py) class wrapping any object detector and an adapter, a [BaseAdapter](shift_tta/models/adapters/base_adapter.py) class and a reference implementation of a [mean-teacher adapter](shift_tta/models/adapters/mean_teacher_adapter_yolox.py) based on YOLOX.
 
+## Prize
+We will award the top three teams of each challenge with a certificate and a prize of 1000, 500, and 300 USD, respectively. The winners of each challenge will be invited to give a presentation at the workshop. Teams will be selected based on the performance of their methods on the test set.
+
+We will also award one team from each challenge with an Innovation Award. The Innovation Award is given to the team that proposes the most innovative method and/or insightful analysis. The winner will receive a certificate and an additional prize of 300 USD.
+
+**Please notice** that this challenge is part of the track **Challenge B - Continual Test-time Adaptation**, together with the challenge on "Continuous Test-time Adaptation for Semantic Segmentation". Since the challenge on "Continuous Test-time Adaptation for Object Detection" constitutes half of the track B, the prize should be considered half of what mentioned above.
+
 ## Instructions
 
 ### Train a model on the source domain
@@ -46,9 +53,10 @@ We implemented a baseline adapter based on a detection consistency loss and a me
 
 You can run the adaptation script on the validation set using [scripts/continuous/mean_teacher_adapter_yolox/test_yolox_shift_from_clear_daytime.sh](scripts/continuous/mean_teacher_adapter_yolox/test_yolox_shift_from_clear_daytime.sh)
 
+
+## Submission
+
 ### Submit your results 
-
-
 Running the above-mentioned scripts with the following `CFG_OPTIONS` stores results in the [Scalabel](https://www.scalabel.ai/) format in `${WORK_DIR}/results`:
 
 ```bash
@@ -59,4 +67,10 @@ declare -a CFG_OPTIONS=(
 
 Identify the file ending with `.scalabel.json` and submit it to our [evaluation benchmark](https://evalai.vis.xyz/web/challenges/challenge-page/6/overview) to participate in the challenge.
 
-We require participants to submit a short report providing details on their solution. Optionally, participant may submit their code or open a pull request after the challenge deadline if they want their adapter included in this repository.
+### Submit a technical report
+
+We require participants to submit a short report providing details on their solution to [vcl.iccvworkshop.2023@gmail.com](mailto:vcl.iccvworkshop.2023@gmail.com). 
+
+Remember that we will also award one team from each challenge with an Innovation Award. The Innovation Award is given to the team that proposes the most innovative method and/or insightful analysis. The winner will receive a certificate and an additional prize of 300 USD.
+
+Optionally, participant may submit their code or open a pull request after the challenge deadline if they want their adapter included in this repository.

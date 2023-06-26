@@ -41,17 +41,19 @@ Please refer to [dataset_prepare.md](docs/dataset_prepare.md) for instructions o
 
 Please refer to [train_test.md](docs/train_test.md) for instructions on how to train and test your own model.
 
-### Participate in the Challenge on Continual Test-time Adaptation for Object Detection
+### Participate in the Challenge on Continuous Test-time Adaptation for Object Detection
 
 Please refer to [challenge.md](docs/challenge.md) for instructions on how to participate in the challenge and for training, test, and adaptation instructions.
 
-The challenge is organized for the Workshop on [Visual Continual Learning @ ICCV2023](wvcl.vis.xyz). Checkout [wvcl.vis.xyz/challenges](https://wvcl.vis.xyz/challenges) for additional details on the challenge. 
+The challenge is organized for the Workshop on [Visual Continual Learning @ ICCV2023](wvcl.vis.xyz). Checkout [wvcl.vis.xyz/challenges](https://wvcl.vis.xyz/challenges) for additional details on this and other challenges. 
 
 We will award the top three teams of each challenge with a certificate and a prize of 1000, 500, and 300 USD, respectively. The winners of each challenge will be invited to give a presentation at the workshop. Teams will be selected based on the performance of their methods on the test set.
 
 We will also award one team from each challenge with an innovation award. The innovation award is given to the team that proposes the most innovative method and/or insightful analysis. The winner will receive a certificate and an additional prize of 300 USD.
 
-# Challenge on Continual Test-time Adaptation for Object Detection
+**Please notice** that this challenge is part of the track **Challenge B - Continual Test-time Adaptation**, together with the challenge on "Continuous Test-time Adaptation for Semantic Segmentation". Since the challenge on "Continuous Test-time Adaptation for Object Detection" constitutes half of the track B, the prize should be considered half of what mentioned above.
+
+# Continuous Test-time Adaptation for Object Detection
 
 ## Model zoo
 
