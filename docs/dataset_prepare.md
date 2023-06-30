@@ -80,9 +80,9 @@ cd shift-dev
 # build and install our Docker image
 docker build -t shift_dataset_decompress .
 
-# run the container (the mode is set to "hdf5")
-docker run -v <path/to/data>:/data -e MODE=hdf5 shift_dataset_decompress
-Here, <path/to/data> denotes the root path under which all tar files will be processed recursively. The mode and number of jobs can be configured through environment variables MODE and JOBS.
+# run the container (the mode is set to "tar")
+docker run -v <path/to/data>:/data -e MODE=tar shift_dataset_decompress
+# Here, <path/to/data> denotes the root path under which all tar files will be processed recursively. The mode and number of jobs can be configured through environment variables MODE and JOBS.
 ```
 
 The folder structure will be as following after your run these scripts:
