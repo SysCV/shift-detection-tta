@@ -40,7 +40,7 @@ You can find a reference validation script at [scripts/continuous/no_adap_yolox/
 ### Continuously adapt a model to the validation target domain
 You can now validate your test-time adaptation baseline on the validation videos presenting continuous domain shift starting from the clear-daytime conditions. The validation set should be used for validating your method under continuous domain shift and for hyperparameter search.
 
-We implemented a baseline adapter based on a detection consistency loss and a mean-teacher formulation. You can find an implementation of the adapter at [mean_teacher_yolox_adapter](shift_tta/models/adapters/mean_teacher_yolox_adapter.py), and the corresponding config file at [configs/continuous/mean_teacher_adapter_yolox/yolox_x_8xb4-12e_shift_from_clear_daytime.py](configs/continuous/mean_teacher_adapter_yolox/yolox_x_8xb4-12e_shift_from_clear_daytime.py).
+We implemented a baseline adapter based on a detection consistency loss and a mean-teacher formulation. You can find an implementation of the adapter at [mean_teacher_yolox_adapter](shift_tta/models/adapters/mean_teacher_yolox_adapter.py), and the corresponding config file at [configs/continuous/mean_teacher_adapter_yolox/yolox_x_8xb4-24e_shift_from_clear_daytime.py](configs/continuous/mean_teacher_adapter_yolox/yolox_x_8xb4-24e_shift_from_clear_daytime.py).
 
 You can run the adaptation script on the validation set using [scripts/continuous/mean_teacher_adapter_yolox/val_yolox_shift_from_clear_daytime.sh](scripts/continuous/mean_teacher_adapter_yolox/val_yolox_shift_from_clear_daytime.sh)
 
@@ -49,7 +49,7 @@ Finally, collect your results on the test set and submit to our evaluation [benc
 
 You can now test your test-time adaptation baseline on the test videos presenting continuous domain shift starting from the clear-daytime conditions.
 
-We implemented a baseline adapter based on a detection consistency loss and a mean-teacher formulation. You can find an implementation of the adapter at [mean_teacher_yolox_adapter](shift_tta/models/adapters/mean_teacher_yolox_adapter.py), and the corresponding config file at [configs/continuous/mean_teacher_adapter_yolox/yolox_x_8xb4-12e_shift_from_clear_daytime.py](configs/continuous/mean_teacher_adapter_yolox/yolox_x_8xb4-12e_shift_from_clear_daytime.py). 
+We implemented a baseline adapter based on a detection consistency loss and a mean-teacher formulation. You can find an implementation of the adapter at [mean_teacher_yolox_adapter](shift_tta/models/adapters/mean_teacher_yolox_adapter.py), and the corresponding config file at [configs/continuous/mean_teacher_adapter_yolox/yolox_x_8xb4-24e_shift_from_clear_daytime.py](configs/continuous/mean_teacher_adapter_yolox/yolox_x_8xb4-24e_shift_from_clear_daytime.py). 
 
 You can run the adaptation script on the validation set using [scripts/continuous/mean_teacher_adapter_yolox/test_yolox_shift_from_clear_daytime.sh](scripts/continuous/mean_teacher_adapter_yolox/test_yolox_shift_from_clear_daytime.sh)
 

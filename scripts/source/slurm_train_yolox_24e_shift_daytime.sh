@@ -13,7 +13,7 @@ CPUS_PER_TASK=${CPUS}
 
 ###############
 ##### Your args
-CONFIG=configs/source/yolox/yolox_x_8xb4-12e_shift_clear_daytime.py
+CONFIG=configs/source/yolox/yolox_x_8xb4-24e_shift_daytime.py
 declare -a CFG_OPTIONS=(
      "data.workers_per_gpu=4"
      "data.samples_per_gpu=4"
