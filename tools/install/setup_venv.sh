@@ -1,6 +1,6 @@
 
-conda create -n shift-tta-new python=3.9 -y
-conda activate shift-tta-new
+conda create -n shift-tta python=3.9 -y
+conda activate shift-tta
 
 conda install pytorch=1.11.0 torchvision cudatoolkit=11.3 -c pytorch -y
 
