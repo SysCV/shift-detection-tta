@@ -45,7 +45,7 @@ Please refer to [train_test.md](docs/train_test.md) for instructions on how to t
 
 Please refer to [challenge.md](docs/challenge.md) for instructions on how to participate in the challenge and for training, test, and adaptation instructions.
 
-The challenge is organized for the Workshop on [Visual Continual Learning @ ICCV2023](wvcl.vis.xyz). Checkout [wvcl.vis.xyz/challenges](https://wvcl.vis.xyz/challenges) for additional details on this and other challenges. 
+The challenge is organized for the Workshop on [Visual Continual Learning @ ICCV2023](https://wvcl.vis.xyz). Checkout [wvcl.vis.xyz/challenges](https://wvcl.vis.xyz/challenges) for additional details on this and other challenges. 
 
 We will award the top three teams of each challenge with a certificate and a prize of 1000, 500, and 300 USD, respectively. The winners of each challenge will be invited to give a presentation at the workshop. Teams will be selected based on the performance of their methods on the test set.
 
