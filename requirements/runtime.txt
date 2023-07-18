@@ -6,6 +6,7 @@ motmetrics
 packaging
 pandas<=1.3.5
 pycocotools
+pydantic==1.9.1
 pytest
 scikit-learn
 scikit-image<=0.19.3
