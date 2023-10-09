@@ -23,7 +23,8 @@
 
 The main branch works with **PyTorch1.6+**.
 
-https://github.com/SysCV/shift-detection-tta/assets/44324619/1b1640b8-d2be-43fd-a692-c4f586eea472
+
+https://github.com/SysCV/shift-detection-tta/assets/44324619/9ddc4b31-7ca9-46b1-a1c5-3b9107e04f9e
 
 
 </div>
@@ -74,6 +75,19 @@ Supported Datasets
 
 If you find this project useful in your research, please consider citing:
 
+- SHIFT, the dataset powering this challenge and the continuous adaptation tasks:
+  
+```latex
+@inproceedings{sun2022shift,
+  title={SHIFT: a synthetic driving dataset for continuous multi-task domain adaptation},
+  author={Sun, Tao and Segu, Mattia and Postels, Janis and Wang, Yuxuan and Van Gool, Luc and Schiele, Bernt and Tombari, Federico and Yu, Fisher},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={21371--21382},
+  year={2022}
+}
+```
+
+- DARTH, the test-time adaptation method introducing the detection consistency loss for detection adaptation based on mean-teacher:
 ```latex
 @inproceedings{sun2022shift,
   title={SHIFT: a synthetic driving dataset for continuous multi-task domain adaptation},
