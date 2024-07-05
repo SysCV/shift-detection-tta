@@ -89,12 +89,12 @@ If you find this project useful in your research, please consider citing:
 
 - DARTH, the test-time adaptation method introducing the detection consistency loss for detection adaptation based on mean-teacher:
 ```latex
-@inproceedings{sun2022shift,
-  title={SHIFT: a synthetic driving dataset for continuous multi-task domain adaptation},
-  author={Sun, Tao and Segu, Mattia and Postels, Janis and Wang, Yuxuan and Van Gool, Luc and Schiele, Bernt and Tombari, Federico and Yu, Fisher},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  pages={21371--21382},
-  year={2022}
+@inproceedings{segu2023darth,
+  title={Darth: holistic test-time adaptation for multiple object tracking},
+  author={Segu, Mattia and Schiele, Bernt and Yu, Fisher},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={9717--9727},
+  year={2023}
 }
 ```
 
